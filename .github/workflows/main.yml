@@ -39,6 +39,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          # 禁用自动 CRLF 转换，避免 Windows push 的文件在 Linux runner 上有 \r
+          core.autocrlf: input
 
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
@@ -59,7 +62,7 @@ jobs:
       - name: Prepare artifact dir
         shell: bash
         run: |
-          VERSION=$(grep '^version' Cargo.toml | head -1 | sed 's/.*"\(.*\)"/\1/')
+          VERSION=$(grep '^version' Cargo.toml | head -1 | sed 's/.*"\(.*\)"/\1/' | tr -d '\r')
           mkdir -p "cli-dist/${VERSION}/${{ matrix.dir }}"
           cp "target/${{ matrix.target }}/release/${{ matrix.artifact }}" "cli-dist/${VERSION}/${{ matrix.dir }}/"
 
