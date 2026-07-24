@@ -49,15 +49,22 @@ jobs:
           targets: ${{ matrix.target }}
 
       - name: Install cargo-zigbuild
+        if: contains(matrix.target, 'musl')
         run: pip install cargo-zigbuild
 
       - name: Install Zig
+        if: contains(matrix.target, 'musl')
         uses: mlugg/setup-zig@v2
         with:
           version: 0.14.0
 
-      - name: Build (static with zig)
+      - name: Build (static with zig for musl)
+        if: contains(matrix.target, 'musl')
         run: cargo zigbuild --release --no-default-features --features cli --bin skill-garden --target ${{ matrix.target }}
+
+      - name: Build (native for non-musl)
+        if: "!contains(matrix.target, 'musl')"
+        run: cargo build --release --no-default-features --features cli --bin skill-garden --target ${{ matrix.target }}
 
       - name: Prepare artifact dir
         shell: bash
