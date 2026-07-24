@@ -56,7 +56,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y gcc-aarch64-linux-gnu
 
       - name: Build
-        run: cargo build --release --features cli --bin skill-garden --target ${{ matrix.target }}
+        run: cargo build --release --no-default-features --features cli --bin skill-garden --target ${{ matrix.target }}
 
       - name: Prepare artifact dir
         shell: bash
