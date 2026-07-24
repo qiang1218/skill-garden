@@ -52,7 +52,7 @@ jobs:
         run: pip install cargo-zigbuild
 
       - name: Install Zig
-        uses: rui314/setup-zig@v1
+        uses: mlugg/setup-zig@v2
         with:
           version: 0.14.0
 
