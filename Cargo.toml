@@ -43,6 +43,7 @@ cli = [
     "dep:flate2",
     "dep:tar",
     "dep:indicatif",
+    "reqwest/rustls-tls",
 ]
 
 [dependencies]
